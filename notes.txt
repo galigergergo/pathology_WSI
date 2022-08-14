@@ -1,0 +1,20 @@
+random selection outline with bezier curves
+	- random_bezier.py gives floating point curve x, y coordinates -> has to be converted to grid of pixels
+		- curve has to be scaled to a specific size on the image/pixels
+		- curve coordinates have to be turned to integer indeces
+		- if curve points are negative, the selection is terminated at image edges
+	- points/pixels inside of the curve have to be specified
+		- ray casting method works very slowly, because we have a set of all the points of a curve, not just a few points of a polygon
+		- finding neighbouring points on x axis and filling pixels between them doesn't work for concave shapes
+		- use combination of both of these: ray casting on a row of the image with the curve that has row gaps filled
+			- both horizontal and vertical rays have to be checked - one intersection at every corner point
+				- ray casting works a lot faster with building up dictionaries of pixel coordinates, than checking each pixel in the whole (x, y) tupple array
+				- this does not work in every case - there still remain single pixels outside and lines of pixels inside of the shapes
+					- solve this by checking neigbours of the pixels and changing them if the majority of their neighbours are different
+						- determining adequate threshhold by experimentation
+						- for two lines of pixels next to each other, one distance neighbours are not enough
+						- further neighbours have to be implemented genericaly
+	- generating 10000 random masks, then manually verifying them visually and regenerating bad ones if needed
+		- saving random points with parameters: rad = 0.2, edgy = 0.05, and masks as pickle files and a png file of each mask
+			- random points or bezier curves are not good, because neighbour cleaning step might deform the masks substantially
+				- curves have to be calculated from masks (points from mask with at least one different direct neighbour)
