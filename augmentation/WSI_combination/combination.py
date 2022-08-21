@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pickle
 import random
+from time import sleep
 
 
 def get_random_mask(nr_masks):
@@ -22,12 +23,11 @@ def generate_random_translation(img_shape, mask_shape):
 
 
 def replace_masked_pixels(main, donor, mask, main_transl, donor_transl):
-    print(main_transl, donor_transl)
     n, m = mask.shape
     for i in range(n):
         for j in range(m):
             if mask[i, j]:
-                main[i + main_transl[0], j + main_transl[1]] = \
+                main[j + main_transl[1], i + main_transl[0]] = \
                     donor[i + donor_transl[0], j + donor_transl[1]]
     return main
 
@@ -67,13 +67,8 @@ for i in range(3):
     outline_mask = extend_outline_mask(outline_mask, outline,
                                        main_img.size, main_transl, 6)
 
-main_img.save('test.png', format="png")
 
-with open('outline_mask.pkl', 'wb') as handle:
+main_img.save('./test/test.png', format="png")
+
+with open('./test/outline_mask.pkl', 'wb') as handle:
     pickle.dump(outline_mask, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-plt.imshow(mask)
-plt.show()
-
-plt.imshow(outline_mask)
-plt.show()

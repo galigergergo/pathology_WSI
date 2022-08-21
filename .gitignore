@@ -1,4 +1,6 @@
 resources/
+augmentation/mask_generation/images/
+augmentation/WSI_combination/test/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
