@@ -185,16 +185,6 @@ def end_correction_by_neighbours_generic(mask, thresh, dist):
     return mask
 
 
-def get_mask_outline(mask):
-    n, m = mask.shape
-    outline = []
-    for i in range(n):
-        for j in range(m):
-            if count_diff_neighbours(i, j, mask) > 1:
-                outline.append((i, j))
-    return outline
-
-
 Ns = [64, 128, 192, 256, 512]
 
 for k in range(1000, 10000):
@@ -243,8 +233,6 @@ for k in range(1000, 10000):
     thresh = 3/5 * (dist * 2 + 1)**2
     out = end_correction_by_neighbours_generic(out, thresh, dist)
 
-    outline = get_mask_outline(out)
-
     imgg = out.copy()
 
     # show Bezier curve and points
@@ -259,7 +247,5 @@ for k in range(1000, 10000):
 
     cv2.imwrite('./images/masks/png/%d.png' % k, imgg * 255)
 
-    with open('./images/masks/pkl/outline_%d.pkl' % k, 'wb') as handle:
-        pickle.dump(outline, handle, protocol=pickle.HIGHEST_PROTOCOL)
     with open('./images/masks/pkl/mask_%d.pkl' % k, 'wb') as handle:
         pickle.dump(out, handle, protocol=pickle.HIGHEST_PROTOCOL)

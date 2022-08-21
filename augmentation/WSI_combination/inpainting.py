@@ -12,7 +12,7 @@ with open('./test/outline_mask.pkl', 'rb') as handle:
 plt.imshow(mask)
 plt.show()
 
-dst = cv2.inpaint(img, mask.astype('uint8') * 255, 3, cv2.INPAINT_TELEA)
+dst = cv2.inpaint(img, mask.astype('uint8') * 255, 10, cv2.INPAINT_NS)
 
 cv2.imshow('dst', dst)
 cv2.waitKey(0)

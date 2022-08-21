@@ -65,8 +65,7 @@ for i in range(3):
                                         main_transl, donor_transl)
 
     outline_mask = extend_outline_mask(outline_mask, outline,
-                                       main_img.size, main_transl, 6)
-
+                                       main_img.size, main_transl, 5)
 
 main_img.save('./test/test.png', format="png")
 
